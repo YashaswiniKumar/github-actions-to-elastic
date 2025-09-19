@@ -182,8 +182,8 @@ exports.sendMessagesToElastic = sendMessagesToElastic;
 function createAxiosGithubInstance(token) {
     return axios_1.default.create({
         baseURL: 'https://api.github.com',
-        timeout: 1000,
-        headers: { Authorization: `token ${token}` }
+        timeout: 5000,
+        headers: { Authorization: `Bearer ${token}` }
     });
 }
 exports.createAxiosGithubInstance = createAxiosGithubInstance;
