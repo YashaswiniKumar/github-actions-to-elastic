@@ -5,11 +5,19 @@ import {Client} from '@elastic/elasticsearch'
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function sendRequestToGithub(client: AxiosInstance, path: string) {
   try {
+    core.info(`Sending Request to GitHub : ${path}`)
     const response = await client.get(path)
     core.debug(response.data)
+    core.info(`Response : ${response.data}`)
     return response.data
-  } catch (e) {
-    throw new Error(`Cannot send request to Github : ${e}`)
+  }  catch (e: any) {
+    core.warning(`⚠️ GitHub request failed: ${e.message}`);
+    if (e.response) {
+      core.debug(`Status: ${e.response.status}`);
+      core.debug(`Data: ${JSON.stringify(e.response.data, null, 2)}`);
+      core.debug(`URL: ${e.config?.url}`);
+    }
+    return null; // gracefully continue without throwing
   }
 }
 
