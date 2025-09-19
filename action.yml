@@ -1,5 +1,5 @@
-name: 'Github Logs to Elastic'
-description: 'Send Github Action logs to Elastic'
+name: 'Github Logs to Elastic Search'
+description: 'Send Github Action logs to Elastic Search'
 author: 'KnutFr'
 branding:
   icon: database
