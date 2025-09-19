@@ -22,8 +22,8 @@ jobs:
       - uses: ./
         with:
           githubToken: "${{ secrets.GITHUB }}"
-          githubOrg: "knutfr"
-          githubRepository: "github-actions-to-elk"
+          githubOrg: "YashaswiniKumar"
+          githubRepository: "github-actions-to-elastic"
           githubRunId: "${{ github.run_id }}"
           elasticHost: "${{ secrets.ELASTIC_HOST }}"
           elasticApiKeyId: "${{ secrets.ELASTIC_KEY_ID }}"
