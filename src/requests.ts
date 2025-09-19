@@ -10,13 +10,9 @@ export async function sendRequestToGithub(client: AxiosInstance, path: string) {
     core.debug(response.data)
     core.info(`Response : ${response.data}`)
     return response.data
-  }  catch (e: any) {
+  }  catch (e: unknown) {
+    // @ts-ignore
     core.warning(`⚠️ GitHub request failed: ${e.message}`);
-    if (e.response) {
-      core.debug(`Status: ${e.response.status}`);
-      core.debug(`Data: ${JSON.stringify(e.response.data, null, 2)}`);
-      core.debug(`URL: ${e.config?.url}`);
-    }
     return null; // gracefully continue without throwing
   }
 }
