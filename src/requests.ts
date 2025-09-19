@@ -10,10 +10,13 @@ export async function sendRequestToGithub(client: AxiosInstance, path: string) {
     core.debug(response.data)
     core.info(`Response : ${response.data}`)
     return response.data
-  }  catch (e: unknown) {
-    // @ts-ignore
-    core.warning(`⚠️ GitHub request failed: ${e.message}`);
-    return null; // gracefully continue without throwing
+  }  catch (e : unknown) {
+    let errorMessage = 'An unknown error occurred';
+    if (e instanceof Error) {
+      errorMessage = e.message;
+    }
+    core.warning(`Cannot send request to Github: ${errorMessage}`);
+    return null;
   }
 }
 
