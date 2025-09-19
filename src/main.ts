@@ -41,7 +41,7 @@ async function run(): Promise<void> {
     core.info(`Retrieving jobs list  from Github Pipeline ${githubRunId}`)
     const jobs = await sendRequestToGithub(githubInstance, jobsUrl)
     for (const job of jobs.jobs) {
-      core.info(`Parsing Job '${job.name}'`)
+      core.info(`Parsing Job name : '${job.name}' and Job Id : '${job.id}'`)
       const achievedJob: ElasticMessageFormat = {
         id: job.id,
         name: job.name,
