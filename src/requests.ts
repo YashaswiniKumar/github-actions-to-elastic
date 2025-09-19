@@ -48,7 +48,11 @@ export function createAxiosGithubInstance(token: string): AxiosInstance {
   return Axios.create({
     baseURL: 'https://api.github.com',
     timeout: 5000,
-    headers: {Authorization: `Bearer ${token}`}
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'User-Agent': 'github-actions-client'
+    }
   })
 }
 

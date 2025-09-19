@@ -183,7 +183,11 @@ function createAxiosGithubInstance(token) {
     return axios_1.default.create({
         baseURL: 'https://api.github.com',
         timeout: 5000,
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'User-Agent': 'github-actions-client'
+        }
     });
 }
 exports.createAxiosGithubInstance = createAxiosGithubInstance;
