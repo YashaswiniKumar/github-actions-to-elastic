@@ -40,23 +40,27 @@ async function run(): Promise<void> {
     const jobsUrl = metadata.jobs_url
     core.info(`Retrieving jobs list  from Github Pipeline ${githubRunId}`)
     const jobs = await sendRequestToGithub(githubInstance, jobsUrl)
+    const regex = /^run-tests\s*\/\s*run-tests.*$/i
     for (const job of jobs.jobs) {
-      core.info(`Parsing Job name : '${job.name}' and Job Id : '${job.id}'`)
-      const achievedJob: ElasticMessageFormat = {
-        id: job.id,
-        name: job.name,
-        metadata,
-        status: job.status,
-        conclusion: job.conclusion,
-        steps: job.steps,
-        details: job,
-        logs: await sendRequestToGithub(
-          githubInstance,
-          `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`
-        )
+      if (regex.test(job.name)) {
+        core.info(`Parsing Job name : '${job.name}' and Job Id : '${job.id}'`)
+        const achievedJob: ElasticMessageFormat = {
+          id: job.id,
+          name: job.name,
+          metadata,
+          status: job.status,
+          conclusion: job.conclusion,
+          steps: job.steps,
+          details: job,
+          logs: await sendRequestToGithub(
+            githubInstance,
+            `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`
+          )
+        }
+        await sendMessagesToElastic(elasticInstance, achievedJob, elasticIndex)
       }
-      await sendMessagesToElastic(elasticInstance, achievedJob, elasticIndex)
     }
+
   } catch (e) {
     if (e instanceof Error) {
       core.setFailed(e.message)
