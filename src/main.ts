@@ -21,7 +21,7 @@ async function run(): Promise<void> {
     const elasticCloudId: string = loadInput('elasticCloudId')
     const elasticCloudUser: string = loadInput('elasticCloudUser')
     const elasticCloudPassword: string = loadInput('elasticCloudPassword')
-    const totalTests= loadInput('total') || null
+    const totalTests= loadInput('totalTests') || null
     const passedTests= loadInput('passedTests') || null
     const failedTests = loadInput('failedTests') || null
 

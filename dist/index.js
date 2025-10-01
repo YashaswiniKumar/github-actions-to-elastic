@@ -64,7 +64,7 @@ function run() {
             const elasticCloudId = (0, tool_1.loadInput)('elasticCloudId');
             const elasticCloudUser = (0, tool_1.loadInput)('elasticCloudUser');
             const elasticCloudPassword = (0, tool_1.loadInput)('elasticCloudPassword');
-            const totalTests = (0, tool_1.loadInput)('total') || null;
+            const totalTests = (0, tool_1.loadInput)('totalTests') || null;
             const passedTests = (0, tool_1.loadInput)('passedTests') || null;
             const failedTests = (0, tool_1.loadInput)('failedTests') || null;
             core.info(`Initializing Github Connection Instance`);
