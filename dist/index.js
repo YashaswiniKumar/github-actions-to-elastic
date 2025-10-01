@@ -82,6 +82,9 @@ function run() {
                 if (regex.test(job.name)) {
                     core.info(`Parsing Job name : '${job.name}' and Job Id : '${job.id}'`);
                     const achievedJob = Object.assign(Object.assign(Object.assign({ id: job.id, name: job.name, metadata, status: job.status, conclusion: job.conclusion, steps: job.steps, details: job, logs: yield (0, requests_1.sendRequestToGithub)(githubInstance, `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`) }, (totalTests !== null && { totalTests })), (passedTests !== null && { passedTests })), (failedTests !== null && { failedTests }));
+                    core.info(`totalTests input: ${totalTests}`);
+                    core.info(`passedTests input: ${passedTests}`);
+                    core.info(`failedTests input: ${failedTests}`);
                     yield (0, requests_1.sendMessagesToElastic)(elasticInstance, achievedJob, elasticIndex);
                 }
             }
