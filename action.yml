@@ -38,6 +38,15 @@ inputs:
   elasticCloudPassword:
     required: false
     description: "The elastic index"
+  totalTests:
+    required: false
+    description: 'Total number of tests executed in the workflow'
+  passedTests:
+    required: false
+    description: 'Number of successfully passed tests'
+  failedTests:
+    required: false
+    description: 'Number of failed tests'
 runs:
   using: 'node12'
   main: 'dist/index.js'
