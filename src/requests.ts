@@ -29,6 +29,9 @@ export interface ElasticMessageFormat {
   steps: string
   logs: string
   status: string
+  totalTests?: string
+  passedTests?: string
+  failedTests?: string
 }
 
 export async function sendMessagesToElastic(

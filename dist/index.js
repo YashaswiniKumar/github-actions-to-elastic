@@ -64,6 +64,9 @@ function run() {
             const elasticCloudId = (0, tool_1.loadInput)('elasticCloudId');
             const elasticCloudUser = (0, tool_1.loadInput)('elasticCloudUser');
             const elasticCloudPassword = (0, tool_1.loadInput)('elasticCloudPassword');
+            const totalTests = (0, tool_1.loadInput)('total') || null;
+            const passedTests = (0, tool_1.loadInput)('passedTests') || null;
+            const failedTests = (0, tool_1.loadInput)('failedTests') || null;
             core.info(`Initializing Github Connection Instance`);
             const githubInstance = (0, requests_1.createAxiosGithubInstance)(githubToken);
             core.info(`Initializing Elastic Instance`);
@@ -78,16 +81,7 @@ function run() {
             for (const job of jobs.jobs) {
                 if (regex.test(job.name)) {
                     core.info(`Parsing Job name : '${job.name}' and Job Id : '${job.id}'`);
-                    const achievedJob = {
-                        id: job.id,
-                        name: job.name,
-                        metadata,
-                        status: job.status,
-                        conclusion: job.conclusion,
-                        steps: job.steps,
-                        details: job,
-                        logs: yield (0, requests_1.sendRequestToGithub)(githubInstance, `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`)
-                    };
+                    const achievedJob = Object.assign(Object.assign(Object.assign({ id: job.id, name: job.name, metadata, status: job.status, conclusion: job.conclusion, steps: job.steps, details: job, logs: yield (0, requests_1.sendRequestToGithub)(githubInstance, `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`) }, (totalTests !== null && { totalTests })), (passedTests !== null && { passedTests })), (failedTests !== null && { failedTests }));
                     yield (0, requests_1.sendMessagesToElastic)(elasticInstance, achievedJob, elasticIndex);
                 }
             }

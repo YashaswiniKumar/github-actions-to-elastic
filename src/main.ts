@@ -21,6 +21,9 @@ async function run(): Promise<void> {
     const elasticCloudId: string = loadInput('elasticCloudId')
     const elasticCloudUser: string = loadInput('elasticCloudUser')
     const elasticCloudPassword: string = loadInput('elasticCloudPassword')
+    const totalTests= loadInput('total') || null
+    const passedTests= loadInput('passedTests') || null
+    const failedTests = loadInput('failedTests') || null
 
     core.info(`Initializing Github Connection Instance`)
     const githubInstance = createAxiosGithubInstance(githubToken)
@@ -55,7 +58,11 @@ async function run(): Promise<void> {
           logs: await sendRequestToGithub(
             githubInstance,
             `/repos/${githubOrg}/${githubRepository}/actions/jobs/${job.id}/logs`
-          )
+          ),
+          //if the totalTests, passedTests and failedTests are not null then they are created and spread into achievedJob obj
+          ...(totalTests !== null && { totalTests }),
+          ...(passedTests !== null && { passedTests }),
+          ...(failedTests !== null && { failedTests })
         }
         await sendMessagesToElastic(elasticInstance, achievedJob, elasticIndex)
       }
