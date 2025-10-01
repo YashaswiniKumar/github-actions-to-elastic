@@ -64,6 +64,9 @@ async function run(): Promise<void> {
           ...(passedTests !== null && { passedTests }),
           ...(failedTests !== null && { failedTests })
         }
+        core.info(`totalTests input: ${totalTests}`)
+        core.info(`passedTests input: ${passedTests}`)
+        core.info(`failedTests input: ${failedTests}`)
         await sendMessagesToElastic(elasticInstance, achievedJob, elasticIndex)
       }
     }

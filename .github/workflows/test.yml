@@ -29,4 +29,7 @@ jobs:
           elasticApiKeyId: "${{ secrets.ELASTIC_KEY_ID }}"
           elasticApiKey: "${{ secrets.ELASTIC_API_KEY }}"
           elasticIndex: "github-test"
+          totalTests: "8"
+          failedTests: "5"
+          passedTests: "3"
         continue-on-error: true
